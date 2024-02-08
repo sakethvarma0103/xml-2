@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Employee Table</title>
+    <script>
+        function viewData() {
+            var xml = document.getElementById('xmlData').value;
+            var xsl = document.getElementById('xslData').value;
+            var processor = new XSLTProcessor();
+            var xmlDoc = new DOMParser().parseFromString(xml, 'text/xml');
+            var xslDoc = new DOMParser().parseFromString(xsl, 'text/xml');
+            processor.importStylesheet(xslDoc);
+            var result = processor.transformToDocument(xmlDoc);
+            document.getElementById('output').innerHTML = new XMLSerializer().serializeToString(result);
+        }
+    </script>
+    <style type="text/css">
+        h2
+        {
+            text-align: center;
+        }
+        button {
+            background-color: #04AA6D;
+            color: white;
+            padding: 10px 15px;
+            text-align: center;
+            display: inline-block;
+            font-size: 16px;
+            transition-duration: 0.4s;
+        }
+
+        button {
+            background-color: white;
+            color: black;
+            border: 2px solid #04AA6D;
+        }
+
+        button:hover {
+            background-color: #04AA6D;
+            color: white;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            border: 1px solid black;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: skyblue;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: snow;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Employee Table</h2>
+    <textarea id="xmlData" style="display:none;"><?xml version="1.0" encoding="UTF-8"?>
+        <employeesystem>
+            <employee>
+            <eid>1</eid>
+            <ename>Saketh</ename>
+            <edesign>Technical Member</edesign>
+            </employee>
+            <employee>
+            <eid>2</eid>
+            <ename>Lohitha</ename>
+            <edesign>Technical Designer</edesign>
+            </employee>
+            <employee>
+            <eid>3</eid>
+            <ename>Charan</ename>
+            <edesign>Core Member</edesign>
+            </employee>
+            <employee>
+            <eid>4</eid>
+            <ename>Srikanth</ename>
+            <edesign>Technical Lead</edesign>
+            </employee>
+            <employee>
+            <eid>5</eid>
+            <ename>Tamada</ename>
+            <edesign>Technical Executive</edesign>
+            </employee>
+            <employee>
+            <eid>6</eid>
+            <ename>Harshita</ename>
+            <edesign>Team Member</edesign>
+            </employee>
+            <employee>
+            <eid>7</eid>
+            <ename>Roshini</ename>
+            <edesign>Tech Member</edesign>
+            </employee>
+            <employee>
+            <eid>8</eid>
+            <ename>Teja</ename>
+            <edesign>Member</edesign>
+            </employee>
+            <employee>
+            <eid>9</eid>
+            <ename>Bhargav</ename>
+            <edesign>Technical Member</edesign>
+            </employee>
+            <employee>
+            <eid>10</eid>
+            <ename>Puvvada</ename>
+            <edesign>Peon</edesign>
+            </employee>
+            <employee>
+            <eid>11</eid>
+            <ename>RADHA</ename>
+            <edesign>Office Boy</edesign>
+            </employee>
+            <employee>
+            <eid>12</eid>
+            <ename>Harshik</ename>
+            <edesign>Technical Head</edesign>
+            </employee>
+            <employee>
+            <eid>13</eid>
+            <ename>Santosh</ename>
+            <edesign>CEO</edesign>
+            </employee>
+            <employee>
+            <eid>14</eid>
+            <ename>Sameera</ename>
+            <edesign>PA</edesign>
+            </employee>
+            <employee>
+            <eid>15</eid>
+            <ename>Revanth</ename>
+            <edesign>Design Member</edesign>
+            </employee>
+            <employee>
+            <eid>16</eid>
+            <ename>Harsha</ename>
+            <edesign>Manager</edesign>
+            </employee>
+            <employee>
+            <eid>17</eid>
+            <ename>Abhihith</ename>
+            <edesign>Logistics</edesign>
+            </employee>
+            <employee>
+            <eid>18</eid>
+            <ename>Kaushik</ename>
+            <edesign>Social Outreach</edesign>
+            </employee>
+            <employee>
+            <eid>19</eid>
+            <ename>Chandra Mouli</ename>
+            <edesign>PR</edesign>
+            </employee>
+            <employee>
+            <eid>20</eid>
+            <ename>Jagruthi</ename>
+            <edesign>Intro Talks</edesign>
+            </employee>
+            </employeesystem>
+</textarea>
+    <textarea id="xslData" style="display:none;"><?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+    <xsl:template match="/">
+        <html>
+            <body>
+                <h2>EMPLOYEE TABLE</h2>
+                <center>
+                <table border="1">
+                    <tr>
+                        <th>EID</th>
+                        <th>EName</th>
+                        <th>Edesign</th>
+                    </tr>
+                    <xsl:for-each select="employeesystem/employee">
+                        <tr>
+                            <td><xsl:value-of select="eid"/></td>
+                            <td><xsl:value-of select="ename"/></td>
+                            <td><xsl:value-of select="edesign"/></td>
+                        </tr>
+                    </xsl:for-each>
+                </table>
+                </center>
+            </body>
+        </html>
+    </xsl:template>
+</xsl:stylesheet>
+</textarea>
+    <center><button onclick="viewData()">View Data</button></center>
+    <div id="output"></div>
+</body>
+
+</html>
